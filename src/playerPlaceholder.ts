@@ -124,6 +124,8 @@ function player_direction_Placeholder(player: Player): string {
         return "E";
     } else if (292.5 <= rotation.y && rotation.y < 337.5) {
         return "SE";
+    } else if (337.5 <= rotation.y && rotation.y < 360) {
+        return "S";
     }
     return "";
 }
