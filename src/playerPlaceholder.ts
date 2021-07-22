@@ -338,7 +338,9 @@ function player_world_Placeholder(player: Player): string {
 function player_world_time_12_Placeholder(player: Player): string {
     let time = getTime();
     let isPm = false;
-
+    if (time.hours === 0) {
+        time.hours = 12;
+    }
     if (time.hours > 12) {
         time.hours -= 12;
     }
