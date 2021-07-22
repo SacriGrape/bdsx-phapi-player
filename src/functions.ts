@@ -54,7 +54,7 @@ export const Actor_isRiding = hackerNon.js("?isRiding@Actor@@QEBA_NXZ", bool_t, 
 export const Actor_IsSneaking = hacker.js("Actor::isSneaking", bool_t, null, Actor);
 
 // BlockSource Functions
-export const BlockSource_getConstBiome = hacker.js("BlockSource::getConstBiome", Biome, { this: BlockSource });
+export const BlockSource_getConstBiome = hacker.js("BlockSource::getConstBiome", Biome, { this: BlockSource }, BlockPos);
 
 // Biome Functions
 export const Biome_getBiomeType = hacker.js("Biome::getBiomeType", int32_t, { this: Biome });
@@ -88,7 +88,7 @@ export const Player_getCertificate = hacker.js("Player::getCertificate", Certifi
 export const Player_getDirection = hacker.js("Player::getDirection", int32_t, { this: Player });
 export const Player_getSleepTimer = hacker.js("Player::getSleepTimer", int32_t, { this: Player });
 export const Player_getSpawnPosition = hacker.js("Player::getSpawnPosition", BlockPos, { this: Player });
-export const Player_getSpawnDimension = hacker.js("Player::getSpawnDimension", int32_t, { this: Player });
+export const Player_getSpawnDimension = hacker.js("Player::getSpawnDimension", int32_t, { this: Player, structureReturn: true });
 
 events.serverOpen.on(() => {
     const level = serverInstance.minecraft.getLevel();
@@ -145,7 +145,11 @@ export function getTime(): {totalTime: number, dayTime: number, days: number, ho
     let totalTime = Level_getTime.call(level);
     let days = Math.trunc(totalTime / 24000);
     let dayTime = totalTime - (days * 24000);
-    let hours = Math.trunc(dayTime / 1200);
-    let minutes = Math.trunc((dayTime - (hours * 1200)) / 20);
+    let hours = Math.trunc(dayTime / 1000);
+    let minutes = Math.trunc((dayTime - (hours * 1000)) / (50/3));
+    hours += 6;
+    if (hours >= 24) {
+        hours -= 24;
+    }
     return {totalTime: totalTime, dayTime: dayTime, days: days, hours: hours, minutes: minutes}
 }

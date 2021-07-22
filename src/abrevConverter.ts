@@ -989,6 +989,6 @@ export function getLanguageName (languageCode: string) {
     if (isoLangs.hasOwnProperty(languageCode)) {
         return isoLangs[languageCode as keyof typeof isoLangs];
     } else {
-        return languageCode;
+        return {name: "null", nativeName: "null"};
     }
 }

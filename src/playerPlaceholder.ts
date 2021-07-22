@@ -160,7 +160,7 @@ function player_exp_to_level_Placeholder(player: Player): string {
         let xpForNext = 2 * level + 7;
         xp = (xpForNext * xpPercent);
     }
-    return xp.toString();
+    return Math.round(xp).toString();
 }
 function player_exp_Placeholder(player: Player) {
     return player.getAttribute(AttributeId.PlayerExperience).toFixed(2).toString();
@@ -195,7 +195,12 @@ function player_name_Placeholder(player: Player): string {
 }
 function player_has_empty_slot_Placeholder(player: Player): string {
     let slots = player.getInventory().getSlots();
-    let hasSlot = slots.toArray().some(slot => { slot.getId() === 0});
+    let hasSlot = false;
+    for (let slot of slots) {
+        if (slot.getId() === 0) {
+            hasSlot = true;
+        }
+    }
     return hasSlot.toString();
 }
 
@@ -283,7 +288,7 @@ function player_locale_display_name_Placeholder(player: Player): string {
     let splitLocale = local.split("_");
     let countryName = getCountryName(splitLocale[1]);
     let languageCode = getLanguageName(splitLocale[0]);
-    return `${languageCode} (${countryName})`;
+    return `${languageCode.name} (${countryName})`;
 }
 function player_locale_short_Placeholder(player: Player) {
     let local = localeMap.get(player.getNetworkIdentifier().toString());
@@ -333,24 +338,18 @@ function player_world_Placeholder(player: Player): string {
 function player_world_time_12_Placeholder(player: Player): string {
     let time = getTime();
     let isPm = false;
+
     if (time.hours > 12) {
         time.hours -= 12;
-        isPm = true;
     }
-    time.hours -= 5;
-    if (time.hours <= 0) {
-        time.hours += 12;
-        if (isPm) {
-            isPm = false;
-        } else {
-            isPm = true;
-        }
+    if (time.dayTime >= 6000 && time.dayTime <= 18000) {
+        isPm = true;
     }
     return `${time.hours.toString().padStart(2, '0')}:${time.minutes.toString().padStart(2, '0')} ${isPm ? "PM" : "AM"}`;
 }
 function player_world_time_24_Placeholder(player: Player): string {
     let time = getTime();
-    return `${time.hours}: ${time.minutes}`
+    return `${time.hours.toString().padStart(2, '0')}:${time.minutes.toString().padStart(2, '0')}`
 }
 function player_x_Placeholder(player: Player): string {
     return player.getPosition().x.toString();
