@@ -8,5 +8,8 @@ events.packetBefore(MinecraftPacketIds.Login).on((p, ni) => {
     let connreq = p.connreq;
     if (!connreq) return;
     let data = connreq.getJsonValue();
+    if (data == null) {
+        return
+    }
     localeMap.set(ni.toString(), data.LanguageCode);
 });

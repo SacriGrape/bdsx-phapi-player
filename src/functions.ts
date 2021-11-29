@@ -34,7 +34,6 @@ const hacker = ProcHacker.load("./pdb.ini", [
     "Mob::isSprinting",
     "Player::canUseAbility",
     "Player::getBedPosition",
-    "Player::getCertificate",
     "Player::getDirection",
     "Player::getSleepTimer",
     "Player::getSpawnPosition",
@@ -84,7 +83,6 @@ export const Mob_isSprinting = hacker.js("Mob::isSprinting", bool_t, { this: Mob
 // Player Functions
 export const Player_canUseAbility = hacker.js("Player::canUseAbility", bool_t, { this: Player }, int32_t);
 export const Player_getBedPosition = hacker.js("Player::getBedPosition", BlockPos, { this: Player });
-export const Player_getCertificate = hacker.js("Player::getCertificate", Certificate, { this: Player });
 export const Player_getDirection = hacker.js("Player::getDirection", int32_t, { this: Player });
 export const Player_getSleepTimer = hacker.js("Player::getSleepTimer", int32_t, { this: Player });
 export const Player_getSpawnPosition = hacker.js("Player::getSpawnPosition", BlockPos, { this: Player });
@@ -93,7 +91,7 @@ export const Player_getSpawnDimension = hacker.js("Player::getSpawnDimension", i
 events.serverOpen.on(() => {
     const level = serverInstance.minecraft.getLevel();
     getXuidBlank = ((player: Player) => {
-        let certificate = Player_getCertificate.call(player);
+        let certificate = player.getCertificate();
         return ExtendedCertificate_getXuid.call(certificate, certificate).toString();
     });
     getPlayerXuid = ((xuid: string) => {

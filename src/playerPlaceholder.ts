@@ -8,7 +8,7 @@ import { MobEffectIds } from "bdsx/bds/effects";
 import { Enchants, Mob } from "./classes";
 import { localeMap } from "./localGetter";
 import { getCountryName, getLanguageName } from "./abrevConverter";
-import { Actor_GetMaxHealth, Actor_GetRotation, Actor_isRiding, Actor_IsSneaking, BlockSource_getConstBiome, dimensionIdToString, EnchantUtils_getEnchantLevel, getLevel, getTime, Level_getSharedSpawnPos, Level_getTime, Mob_isSprinting, Player_canUseAbility, Player_getBedPosition, Player_getCertificate, Player_getSleepTimer, Player_getSpawnDimension } from "./functions";
+import { Actor_GetMaxHealth, Actor_GetRotation, Actor_isRiding, Actor_IsSneaking, BlockSource_getConstBiome, dimensionIdToString, EnchantUtils_getEnchantLevel, getLevel, getTime, Level_getSharedSpawnPos, Level_getTime, Mob_isSprinting, Player_canUseAbility, Player_getBedPosition, Player_getSleepTimer, Player_getSpawnDimension } from "./functions";
 import { bin } from "bdsx/bin";
 import { Certificate } from "bdsx/bds/connreq";
 
@@ -326,7 +326,7 @@ function player_uuid_Placeholder(player: Player): string {
     return bin.toString(uuidBin);
 }
 function player_xuid_Placeholder(player: Player): string {
-    let cert: Certificate = Player_getCertificate.call(player);
+    let cert: Certificate = player.getCertificate()
     return cert.getXuid();
 }
 function player_walk_speed_Placeholder(player: Player): string {
